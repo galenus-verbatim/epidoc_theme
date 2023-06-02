@@ -154,7 +154,6 @@ const Verbatim = function()
         // pad page number for biusante 
         pno = pad(parseInt(n) + parseInt(pdiff), 4);
         url = dat['url'].replace('%%', pno);
-        console.log(n + "+" + pdiff + "=" + pno);
         return url;
     }
     function pad(num, width) {

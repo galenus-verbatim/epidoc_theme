@@ -145,6 +145,14 @@ output method="html" for <span></span>
       <xsl:attribute name="class">
         <xsl:value-of select="normalize-space(concat(@type, ' ', @subtype))"/>
       </xsl:attribute>
+      <xsl:if test="not(tei:head) and not(@type = 'edition')">
+        <xsl:variable name="level" select="count(ancestor-or-self::tei:div[@type='textpart'])"/>
+        <xsl:element name="h{$level}">
+          <xsl:text>[</xsl:text>
+          <xsl:call-template name="title"/>
+          <xsl:text>]</xsl:text>
+        </xsl:element>
+      </xsl:if>
       <xsl:apply-templates/>
     </section>
   </xsl:template>
@@ -553,10 +561,6 @@ output method="html" for <span></span>
   
   <xsl:template name="title">
     <xsl:choose>
-      <xsl:when test="tei:head">
-        <!-- typo in title ? -->
-        <xsl:value-of select="normalize-space(tei:head)"/>
-      </xsl:when>
       <xsl:when test="@n and tei:div[@type='textpart'][@subtype='chapter']">
         <xsl:text>Liber </xsl:text>
         <xsl:value-of select="@n"/>
@@ -571,6 +575,10 @@ output method="html" for <span></span>
             <xsl:value-of select="@n"/>
           </xsl:otherwise>
         </xsl:choose>
+      </xsl:when>
+      <xsl:when test="tei:head">
+        <!-- typo in title ? -->
+        <xsl:value-of select="normalize-space(tei:head)"/>
       </xsl:when>
       <xsl:when test="@type='textpart' and @subtype='section' and @n">
         <xsl:choose>
