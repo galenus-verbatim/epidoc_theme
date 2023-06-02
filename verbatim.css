@@ -1,3 +1,25 @@
+:root {
+    --bg: #000;
+    --text: #fff;
+    --bglo: rgb(66, 66, 66);
+    --texta: rgb(255, 255, 255, 0.5);
+    --link: #00ff00;
+    --bghi: #003300;
+    --bg2: rgb(102, 102, 102);
+    --text2: rgb(33, 33, 33);
+    --bgmark: #006600;
+    /*
+    --bgloa: rgba(255, 255, 255, 0.35);
+    --textlo: #666;
+    --textinv: #000;
+    --bg2a: rgba(102, 102, 102, 0.8);
+    --text2hi: #fff;
+    --text2inv: #fff;
+    --bg3: #f0f0f0;
+    --text3: #666;
+    */
+}
+
 html {
     height: 100vh;
 }
@@ -92,6 +114,29 @@ blockquote.lemma::before {
 
 blockquote.lemma::after {
     display: none;
+}
+
+
+span.lb::before {
+    white-space: pre;
+    content: '\A';
+}
+
+span.lb[data-line]::after,
+span.lb.rule[data-line]::before {
+    box-sizing: border-box;
+    text-indent: 0;
+    font-size: 0.7rem;
+    font-weight: normal;
+    display: inline-block;
+    content:  attr(data-line) ". " ;
+    width: 2rem;
+    padding-left: 1ex;
+    color: var(--textlo);
+}
+
+div.l>span.lb:first-child::before {
+    content: '';
 }
 
 span.lb.rule::after {

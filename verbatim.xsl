@@ -56,7 +56,7 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
             <header>
               <xsl:apply-templates select="/tei:TEI/tei:teiHeader"/>
             </header>
-            <xsl:apply-templates/>
+            <xsl:apply-templates select="/tei:TEI/tei:text"/>
           </div>
           <aside id="sidebar">
             <xsl:call-template name="side-header"/>
@@ -130,6 +130,8 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
       <xsl:apply-templates/>
     </article>
   </xsl:template>
+  
+  <!--
   <xsl:template match="*" priority="-1">
     <xsl:choose>
       <xsl:when test="namespace-uri(/*) = namespace-uri()">
@@ -146,6 +148,7 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  -->
 
 
 </xsl:transform>

@@ -260,10 +260,10 @@ BSD-3-Clause https://opensource.org/licenses/BSD-3-Clause
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:biblStruct">
-    <span>
+    <p>
       <xsl:call-template name="headatts"/>
       <xsl:apply-templates/>
-    </span>
+    </p>
   </xsl:template>
   <xsl:template match="tei:monogr | tei:analytic">
     <span>
@@ -467,7 +467,31 @@ BSD-3-Clause https://opensource.org/licenses/BSD-3-Clause
       </div>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:teiHeader//tei:author | tei:teiHeader//tei:biblFull | tei:teiHeader//tei:biblScope | tei:teiHeader//tei:collation | tei:teiHeader//tei:collection | tei:teiHeader//tei:country | tei:teiHeader//tei:dim | tei:teiHeader//tei:editor | tei:teiHeader//tei:edition | tei:teiHeader//tei:extent | tei:teiHeader//tei:funder | tei:teiHeader//tei:institution | tei:teiHeader//tei:name | tei:teiHeader//tei:persName | tei:teiHeader//tei:biblFull/tei:publicationStmt | tei:teiHeader//tei:publisher | tei:teiHeader//tei:pubPlace | tei:teiHeader//tei:repository | tei:teiHeader//tei:settlement | tei:teiHeader//tei:stamp  | tei:teiHeader//tei:biblFull/tei:seriesStmt | tei:teiHeader//tei:biblFull/tei:titleStmt | tei:teiHeader//tei:biblFull/tei:titleStmt/tei:title">
+  <xsl:template match="
+      tei:teiHeader//tei:author 
+    | tei:teiHeader//tei:biblFull 
+    | tei:teiHeader//tei:biblScope 
+    | tei:teiHeader//tei:collation 
+    | tei:teiHeader//tei:collection 
+    | tei:teiHeader//tei:country 
+    | tei:teiHeader//tei:dim 
+    | tei:teiHeader//tei:editor 
+    | tei:teiHeader//tei:edition 
+    | tei:teiHeader//tei:extent 
+    | tei:teiHeader//tei:funder 
+    | tei:teiHeader//tei:institution 
+    | tei:teiHeader//tei:name 
+    | tei:teiHeader//tei:persName 
+    | tei:teiHeader//tei:biblFull/tei:publicationStmt
+    | tei:teiHeader//tei:publisher
+    | tei:teiHeader//tei:pubPlace
+    | tei:teiHeader//tei:repository
+    | tei:teiHeader//tei:settlement
+    | tei:teiHeader//tei:stamp
+    | tei:teiHeader//tei:biblFull/tei:seriesStmt
+    | tei:teiHeader//tei:biblFull/tei:titleStmt
+    | tei:teiHeader//tei:biblFull/tei:titleStmt/tei:title
+    " priority="0">
     <xsl:variable name="element">
       <xsl:choose>
         <xsl:when test="self::title">cite</xsl:when>
@@ -532,7 +556,7 @@ BSD-3-Clause https://opensource.org/licenses/BSD-3-Clause
   </xsl:template>
   <!-- Personne avec role -->
   <xsl:template match="tei:respStmt">
-    <span class="resp">
+    <div class="resp">
       <xsl:choose>
         <xsl:when test="tei:name[@ref]">
           <xsl:variable name="string">
@@ -557,7 +581,7 @@ BSD-3-Clause https://opensource.org/licenses/BSD-3-Clause
         <xsl:value-of select="normalize-space($txt)"/>
         <xsl:text>)</xsl:text>
       </xsl:if>
-    </span>
+    </div>
   </xsl:template>
   <xsl:template match="tei:creation">
     <xsl:variable name="date">

@@ -192,7 +192,7 @@ output method="html" for <span></span>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$n != ''">
-        <br>
+        <span>
           <xsl:attribute name="class">
             <xsl:value-of select="normalize-space(concat('lb ', @rend))"/>
           </xsl:attribute>
@@ -215,7 +215,7 @@ output method="html" for <span></span>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-        </br>
+        </span>
       </xsl:when>
       <xsl:otherwise>
         <!-- xmlns="http://www.w3.org/1999/xhtml" may produce <br></br> -->
