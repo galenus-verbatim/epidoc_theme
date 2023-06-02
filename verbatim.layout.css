@@ -7,7 +7,9 @@
     --font: sans-serif;
 }
 
-
+* {
+    box-sizing: border-box;
+}
 @media screen {
     #viewport {
         width: 100%;
@@ -32,6 +34,7 @@
     #sidebar {
         padding: 1em 1em 2em 1em;
         padding: 1rem 1rem 2rem 1rem;
+        min-width: 30ex;
     }
     #sidebar,
     .pannel {
@@ -52,12 +55,11 @@ small.no {}
 
 small.ed {}
 
-html {
-    height: 100%;
-}
-
+html,
 body {
-    min-height: 100%;
+    height: 99%;
+    margin: 0;
+    padding: 0;
 }
 
 #header,
@@ -106,10 +108,12 @@ h1,
 h2 {}
 
 h1 {
-    border-bottom: 1px solid var(--border);
+    font-size: 130%;
+    text-align: center;
 }
 
 h2 {
+    font-size: 117%;
     text-align: left;
 }
 
@@ -212,6 +216,11 @@ main::after,
     height: 100%;
 }
 
+#image {
+    height: 99.5%;
+    padding: 0;
+    margin: 0;
+} 
 /** font sizes */
 @media (min-width: 1800px) {
     body {
@@ -257,8 +266,10 @@ main::after,
 
 /** wide screens */
 #text {
-    width: 72ex;
-    padding: 3em 4em 3em 4em;
+    width: 100ex;
+    height: 100vh;
+    overflow-y: scroll;
+    padding: 3em 4em 3em 1em;
     background: #fff;
 }
 
@@ -306,6 +317,11 @@ main::after,
         height: calc(100vh);
         order: -1;
         overflow-y: auto;
+    }
+    #pagimage {
+        position: sticky;
+        top: 0;
+        height: calc(100vh);
     }
     #cont {}
     #header {

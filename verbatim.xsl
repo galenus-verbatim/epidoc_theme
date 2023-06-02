@@ -36,7 +36,12 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
     <html>
       <head>
         <meta charset="UTF-8"/>
+        <title>
+          <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+        </title>
         <meta name="modified" content="{$date}"/>
+        <script type="text/javascript" charset="utf-8" src="{$theme}vols.js">//</script>
+        <link rel="stylesheet" type="text/css" href="https://oeuvres.github.io/teinte_theme/teinte.tree.css" />
         <link rel="stylesheet" type="text/css" href="{$theme}verbatim.css"/>
         <link rel="stylesheet" type="text/css" href="{$theme}verbatim.layout.css"/>
         <!--
@@ -58,6 +63,12 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
             </header>
             <xsl:apply-templates select="/tei:TEI/tei:text"/>
           </div>
+          <div id="pagimage">
+              <!--
+              <header id="image_header">Titre image</header>
+              -->
+              <img id="image"/>
+          </div>
           <aside id="sidebar">
             <xsl:call-template name="side-header"/>
             <nav>
@@ -65,7 +76,8 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
             </nav>
           </aside>
         </div>
-        <script type="text/javascript" charset="utf-8" src="{$theme}teinte.tree.js">//</script>
+        <script type="text/javascript" charset="utf-8" src="https://oeuvres.github.io/teinte_theme/teinte.tree.js">//</script>
+        <script type="text/javascript" charset="utf-8" src="{$theme}verbatim.js">//</script>
       </body>
     </html>
   </xsl:template>

@@ -37,6 +37,8 @@ const Jax = function() {
     }
 }();
 
+/*
+// fast nav between texts ?
 (function() {
     const nav = document.getElementById('nav');
     const doc = document.getElementById('doc');
@@ -61,8 +63,10 @@ const Jax = function() {
     })
 
 }());
+*/
 
 const Galenus = function() {
+
     // https://www.biusante.parisdescartes.fr/iiif/2/bibnum:00039x04:0038/full/max/0/default.jpg
     function wear(css, dat) {
         if (!dat) return;
@@ -131,12 +135,88 @@ const Galenus = function() {
         wear: wear,
     }
 }();
+
+const Verbatim = function()
+{
+    const image = document.getElementById('image');
+    function pageUrl(dat, n)
+    {
+        let pdiff = dat['pdiff'];
+        if (dat['pholes']) {
+            for (const prop in dat['pholes']) {
+                if (n >= prop) {
+                    pdiff = dat['pholes'][prop];
+                } else {
+                    break;
+                }
+            }
+        }
+        // pad page number for biusante 
+        pno = pad(parseInt(n) + parseInt(pdiff), 4);
+        url = dat['url'].replace('%%', pno);
+        console.log(n + "+" + pdiff + "=" + pno);
+        return url;
+    }
+    function pad(num, width) {
+        var s = "000000000" + num;
+        return s.substring(s.length - width);
+    }
+
+    function pageClick()
+    {
+        let page = this.dataset.page;
+        const parts = page.split('.');
+        let n = null;
+        let vol = null;
+        // no volume, kühn centric, 
+        if (parts.length == 1) {
+            p = parts[0];
+            return;
+        }
+        else if (parts.length == 2) {
+            vol = '' + parts[0];
+            n = parts[1];
+        }
+        else {
+            // error ?
+            return;
+        }
+        if (!vols) {
+            console.log("No volume info");
+            return;
+        }
+        // get url for volume
+        const dat = vols['pb'][vol];
+        const url = pageUrl(dat, n);
+        image.src = url;
+    }
+    /**
+     * light fast event 
+     */
+    function pageWear(css)
+    {
+        if (!image) return;
+        let els = document.querySelectorAll(css);
+        for (let i = 0; i < els.length; ++i) {
+            let el = els[i];
+            el.onclick = pageClick;
+        }
+
+    }
+    return {
+        pageWear: pageWear,
+    }
+}();
+(function()
+{
+    Verbatim.pageWear('.pb');
+}());
 /**
  * Do something with bâle chartier data
  */
 const image = document.getElementById('image');
 const div = document.getElementById('viewcont');
-if (div) {
+if (window.Viewer) {
     // viewer override of resize
     Viewer.prototype.resize = function() {
         var _this3 = this;

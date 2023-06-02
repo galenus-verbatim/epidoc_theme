@@ -1,13 +1,26 @@
 :root {
-    --bg: #000;
-    --text: #fff;
-    --bglo: rgb(66, 66, 66);
-    --texta: rgb(255, 255, 255, 0.5);
-    --link: #00ff00;
-    --bghi: #003300;
+    --bg: #fff;
+    --text: #333;
+    --bghi: #e09143;
+    --texthi: #fff;
+    --bglo: rgb(236, 214, 190);
+    --bgloa: rgba(236, 214, 190, 0.85);
+    --bgmark: var(--bgloa);
+    --textlo: #666;
+    --textinv: #000;
+    --link: #e09143;
+    --link2: rgba(224, 145, 67, 0.5);
+    --link3: #9c652e;
     --bg2: rgb(102, 102, 102);
-    --text2: rgb(33, 33, 33);
-    --bgmark: #006600;
+    --bg2a: rgba(102, 102, 102, 0.8);
+    --bg2: rgba(71, 50, 29, 0.8);
+    --bg2a: rgba(71, 50, 29, 0.8);
+    --text2: rgb(236, 214, 190);
+    --text2hi: #fff;
+    --text2inv: #fff;
+    --bg3: #f0f0f0;
+    --text3: #666;
+  }
     /*
     --bgloa: rgba(255, 255, 255, 0.35);
     --textlo: #666;
@@ -22,8 +35,12 @@
 
 html {
     height: 100vh;
+    padding: 0;
+    margin: 0;
 }
 body {
+    padding: 0;
+    margin: 0;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -156,12 +173,14 @@ section[title]::before {
     margin-bottom: 1rem;
 }
 span.pb {
+    width: 100%;
     display: block;
     font-weight: normal;
     height: 0;
     margin: 3px 0;
     font-size: 0;
-    border-top: 1px solid #fff;
+    border-top: 1px dotted var(--textlo);
+    cursor: pointer;
 }
 
 tr {

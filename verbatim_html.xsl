@@ -142,6 +142,9 @@ output method="html" for <span></span>
       <xsl:attribute name="id">
         <xsl:call-template name="id"/>
       </xsl:attribute>
+      <xsl:attribute name="class">
+        <xsl:value-of select="normalize-space(concat(@type, ' ', @subtype))"/>
+      </xsl:attribute>
       <xsl:apply-templates/>
     </section>
   </xsl:template>
@@ -173,9 +176,10 @@ output method="html" for <span></span>
   <xsl:template match="tei:gap"/>
   
   <xsl:template match="tei:head">
-    <h1>
+    <xsl:param name="level" select="count(ancestor::tei:div[@type='textpart'])"/>
+    <xsl:element name="h{$level}">
       <xsl:apply-templates/>
-    </h1>
+    </xsl:element>
   </xsl:template>
 
   <!-- line identifier -->
@@ -549,6 +553,10 @@ output method="html" for <span></span>
   
   <xsl:template name="title">
     <xsl:choose>
+      <xsl:when test="tei:head">
+        <!-- typo in title ? -->
+        <xsl:value-of select="normalize-space(tei:head)"/>
+      </xsl:when>
       <xsl:when test="@n and tei:div[@type='textpart'][@subtype='chapter']">
         <xsl:text>Liber </xsl:text>
         <xsl:value-of select="@n"/>
@@ -580,11 +588,12 @@ output method="html" for <span></span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   
   <xsl:template match="tei:div" mode="toc">
     <xsl:choose>
       <xsl:when test="@type = 'edition'">
-        <ul>
+        <ul class="tree">
           <xsl:apply-templates select="tei:div" mode="toc"/>
         </ul>
       </xsl:when>
