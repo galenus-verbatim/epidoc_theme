@@ -223,3 +223,7 @@ td.lb::before {
     font-size: 0.7rem;
     content: attr(data-line);
 }
+
+div.lg {
+    margin-left: 2em;
+}
