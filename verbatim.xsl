@@ -130,7 +130,7 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
     <xsl:param name="level" select="count(ancestor::tei:group)"/>
     <article>
       <xsl:attribute name="id">
-        <xsl:call-template name="id"/>
+        <xsl:call-template name="cts"/>
       </xsl:attribute>
       <!-- 
       <xsl:call-template name="atts"/>

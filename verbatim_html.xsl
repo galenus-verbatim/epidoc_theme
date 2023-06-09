@@ -140,7 +140,7 @@ output method="html" for <span></span>
   <xsl:template match="tei:div">
     <section>
       <xsl:attribute name="id">
-        <xsl:call-template name="id"/>
+        <xsl:call-template name="cts"/>
       </xsl:attribute>
       <xsl:attribute name="class">
         <xsl:value-of select="normalize-space(concat(@type, ' ', @subtype))"/>
@@ -149,7 +149,7 @@ output method="html" for <span></span>
         <xsl:variable name="level" select="count(ancestor-or-self::tei:div[@type='textpart'])"/>
         <xsl:element name="h{$level}">
           <xsl:text>[</xsl:text>
-          <xsl:call-template name="title"/>
+          <xsl:call-template name="titulus"/>
           <xsl:text>]</xsl:text>
         </xsl:element>
       </xsl:if>
@@ -559,7 +559,7 @@ output method="html" for <span></span>
     <xsl:apply-templates select="tei:div" mode="toc"/>
   </xsl:template>
   
-  <xsl:template name="title">
+  <xsl:template name="titulus">
     <xsl:choose>
       <xsl:when test="@n and tei:div[@type='textpart'][@subtype='chapter']">
         <xsl:text>Liber </xsl:text>
@@ -596,7 +596,7 @@ output method="html" for <span></span>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="id"/>
+        <xsl:call-template name="cts"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -615,9 +615,9 @@ output method="html" for <span></span>
           <a>
             <xsl:attribute name="href">
               <xsl:text>#</xsl:text>
-              <xsl:call-template name="id"/>
+              <xsl:call-template name="cts"/>
             </xsl:attribute>
-            <xsl:call-template name="title"/>
+            <xsl:call-template name="titulus"/>
           </a>
           <xsl:if test="tei:div">
             <ul>
@@ -635,7 +635,7 @@ output method="html" for <span></span>
   
   <xsl:template match="node()" mode="toc" priority="-1"/>
 
-  <xsl:template name="id">
+  <xsl:template name="cts">
     <xsl:value-of select="ancestor-or-self::tei:div[@type = 'edition']/@n"/>
     <xsl:variable name="n">
       <xsl:call-template name="n"/>

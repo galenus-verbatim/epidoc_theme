@@ -265,7 +265,7 @@ BSD-3-Clause https://opensource.org/licenses/BSD-3-Clause
       <xsl:apply-templates/>
     </p>
   </xsl:template>
-  <xsl:template match="tei:monogr | tei:analytic">
+  <xsl:template match="tei:monogr | tei:analytic | tei:biblStruct/tei:series">
     <span>
       <xsl:call-template name="headatts"/>
       <xsl:for-each select="*[not(@type = 'titre_court')]">
