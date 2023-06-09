@@ -580,6 +580,10 @@ output method="html" for <span></span>
         <!-- typo in title ? -->
         <xsl:value-of select="normalize-space(tei:head)"/>
       </xsl:when>
+      <xsl:when test=".//tei:label[@type='head']">
+        <!-- typo in title ? -->
+        <xsl:value-of select="normalize-space(.//tei:label[@type='head'])"/>
+      </xsl:when>
       <xsl:when test="@type='textpart' and @subtype='section' and @n">
         <xsl:choose>
           <xsl:when test="number(@n) &gt; 0">
@@ -596,6 +600,7 @@ output method="html" for <span></span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
   
   <xsl:template match="tei:div" mode="toc">
