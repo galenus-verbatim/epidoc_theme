@@ -242,6 +242,17 @@ BSD-3-Clause https://opensource.org/licenses/BSD-3-Clause
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <!-- -->
+  <xsl:template match="tei:sourceDesc/tei:listBibl">
+    <ul>
+      <xsl:for-each select="*">
+        <li>
+          <xsl:call-template name="headatts"/>
+          <xsl:apply-templates/>
+        </li>
+      </xsl:for-each>
+    </ul>
+  </xsl:template>
   <xsl:template match="tei:msDesc">
     <span>
       <xsl:call-template name="headatts"/>
