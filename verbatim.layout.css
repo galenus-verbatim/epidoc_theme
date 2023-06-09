@@ -315,6 +315,7 @@ main::after,
         align-self: flex-start;
         position: sticky;
         height: calc(100vh);
+        max-width: 20rem;
         order: -1;
         overflow-y: auto;
     }
