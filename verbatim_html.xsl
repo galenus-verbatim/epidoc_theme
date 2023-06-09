@@ -30,6 +30,8 @@ output method="html" for <span></span>
     doctype-public="HTML"
     doctype-system=""
   />
+  <!-- Maybe modified by caller -->
+  <xsl:param name="cts" select="/tei:TEI/tei:text/tei:body/tei:div[@type = 'edition'][1]/@n"/>
   
   <!-- To produce a normalised id without diacritics translate("Déjà vu, 4", $idfrom, $idto) = "dejavu4"  To produce a normalised id -->
   <xsl:variable name="idfrom">ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂÄÉÈÊÏÎÔÖÛÜÇàâäéèêëïîöôüû_ ,.'’ #()</xsl:variable>
@@ -72,8 +74,8 @@ output method="html" for <span></span>
   </xsl:template>
 
   <xsl:template match="tei:*" priority="-5">
-    <xsl:message terminate="yes">
-      <xsl:text>[cts_html.xsl] </xsl:text>
+    <xsl:message terminate="no">
+      <xsl:text>[verbatim_html.xsl] </xsl:text>
       <xsl:text>&lt;</xsl:text>
       <xsl:value-of select="name()"/>
       <xsl:text>&gt;</xsl:text>
@@ -561,12 +563,24 @@ output method="html" for <span></span>
   
   <xsl:template name="titulus">
     <xsl:choose>
+      <xsl:when test="./tei:label[@type='head']">
+        <!-- typo in title ? -->
+        <xsl:value-of select="normalize-space(./tei:label[@type='head'])"/>
+      </xsl:when>
+      <xsl:when test="./tei:p/tei:label[@type='head']">
+        <!-- typo in title ? -->
+        <xsl:value-of select="normalize-space(./tei:p/tei:label[@type='head'])"/>
+      </xsl:when>
       <xsl:when test="@n and tei:div[@type='textpart'][@subtype='chapter']">
         <xsl:text>Liber </xsl:text>
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="@type='textpart' and @subtype='chapter' and @n">
+      <xsl:when test="@type='textpart' and @subtype='chapter'">
         <xsl:choose>
+          <xsl:when test="not(@n) or normalize-space(@n) = ''">
+            <xsl:text>Capitulum </xsl:text>
+            <xsl:number/>
+          </xsl:when>
           <xsl:when test="number(@n) &gt; 0">
             <xsl:text>Capitulum </xsl:text>
             <xsl:value-of select="@n"/>
@@ -580,12 +594,12 @@ output method="html" for <span></span>
         <!-- typo in title ? -->
         <xsl:value-of select="normalize-space(tei:head)"/>
       </xsl:when>
-      <xsl:when test=".//tei:label[@type='head']">
-        <!-- typo in title ? -->
-        <xsl:value-of select="normalize-space(.//tei:label[@type='head'])"/>
-      </xsl:when>
-      <xsl:when test="@type='textpart' and @subtype='section' and @n">
+      <xsl:when test="@type='textpart' and @subtype='section'">
         <xsl:choose>
+          <xsl:when test="not(@n) or normalize-space(@n) = ''">
+            <xsl:text>Sectio </xsl:text>
+            <xsl:number/>
+          </xsl:when>
           <xsl:when test="number(@n) &gt; 0">
             <xsl:text>Sectio </xsl:text>
             <xsl:value-of select="@n"/>
