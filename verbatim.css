@@ -227,3 +227,7 @@ td.lb::before {
 div.lg {
     margin-left: 2em;
 }
+
+label.head {
+    font-weight: bold;
+}
