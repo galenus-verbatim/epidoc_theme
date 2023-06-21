@@ -165,7 +165,7 @@ output method="html" for <span></span>
           <xsl:variable name="level" select="count(ancestor-or-self::tei:div[@type='textpart'])"/>
           <xsl:element name="h{$level}">
             <xsl:text>[</xsl:text>
-            <xsl:call-template name="titulus"/>
+            <xsl:call-template name="title"/>
             <xsl:text>]</xsl:text>
           </xsl:element>
         </xsl:otherwise>
@@ -577,26 +577,38 @@ output method="html" for <span></span>
     <xsl:apply-templates select="tei:div" mode="toc"/>
   </xsl:template>
   
-  <xsl:template name="titulus">
+  <xsl:template name="title">
     <xsl:choose>
       <xsl:when test="@type='textpart' and @subtype='chapter'">
+        <xsl:variable name="label">Capitulum </xsl:variable>
         <xsl:choose>
-          <xsl:when test="not(@n) or normalize-space(@n) = ''">
-            <xsl:text>Capitulum </xsl:text>
-            <xsl:number/>
-          </xsl:when>
           <xsl:when test="number(@n) &gt; 0">
             <xsl:text>Capitulum </xsl:text>
             <xsl:value-of select="@n"/>
           </xsl:when>
-          <xsl:otherwise>
+          <xsl:when test="@n and @n != ''">
             <xsl:value-of select="@n"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>Capitulum </xsl:text>
+            <xsl:number/>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:if test="./tei:p/tei:label[@type='head']">
-          <xsl:text>. </xsl:text>
-          <xsl:value-of select="normalize-space(./tei:p/tei:label[@type='head'])"/>
-        </xsl:if>
+        <xsl:choose>
+          <!-- Title in chapter are not systematic, reason why the prefix “Capitulum” is useful -->
+          <xsl:when test="tei:head">
+            <xsl:text>. </xsl:text>
+            <xsl:value-of select="tei:head"/>
+          </xsl:when>
+          <xsl:when test="./tei:p/tei:label[@type='head']">
+            <xsl:text>. </xsl:text>
+            <xsl:value-of select="normalize-space(./tei:p/tei:label[@type='head'])"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="tei:head">
+        <!-- typo in title ? -->
+        <xsl:value-of select="normalize-space(tei:head)"/>
       </xsl:when>
       <xsl:when test="./tei:label[@type='head']">
         <!-- typo in title ? -->
@@ -606,28 +618,34 @@ output method="html" for <span></span>
         <!-- typo in title ? -->
         <xsl:value-of select="normalize-space(./tei:p/tei:label[@type='head'])"/>
       </xsl:when>
-      <xsl:when test="@n and tei:div[@type='textpart'][@subtype='chapter']">
-        <xsl:text>Liber </xsl:text>
-        <xsl:value-of select="@n"/>
-      </xsl:when>
-      <xsl:when test="tei:head">
-        <!-- typo in title ? -->
-        <xsl:value-of select="normalize-space(tei:head)"/>
-      </xsl:when>
-      <xsl:when test="@type='textpart' and @subtype='section'">
+      <xsl:when test="@type='textpart' and (@subtype='chapter' or @subtype='section')">
+        <xsl:variable name="label">
+          <xsl:choose>
+            <xsl:when test="@subtype='chapter'">Capitulum </xsl:when>
+            <xsl:when test="@subtype='section'">Sectio </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
         <xsl:choose>
-          <xsl:when test="not(@n) or normalize-space(@n) = ''">
-            <xsl:text>Sectio </xsl:text>
-            <xsl:number/>
-          </xsl:when>
           <xsl:when test="number(@n) &gt; 0">
-            <xsl:text>Sectio </xsl:text>
+            <xsl:text>Capitulum </xsl:text>
+            <xsl:value-of select="@n"/>
+          </xsl:when>
+          <xsl:when test="@n and @n != ''">
             <xsl:value-of select="@n"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="@n"/>
+            <xsl:text>Capitulum </xsl:text>
+            <xsl:number/>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="./tei:p/tei:label[@type='head']">
+          <xsl:text>. </xsl:text>
+          <xsl:value-of select="normalize-space(./tei:p/tei:label[@type='head'])"/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:when test="@n and tei:div[@type='textpart'][@subtype='chapter']">
+        <xsl:text>Liber </xsl:text>
+        <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="cts"/>
@@ -651,7 +669,7 @@ output method="html" for <span></span>
               <xsl:text>#</xsl:text>
               <xsl:call-template name="cts"/>
             </xsl:attribute>
-            <xsl:call-template name="titulus"/>
+            <xsl:call-template name="title"/>
           </a>
           <xsl:if test="tei:div">
             <ul>
