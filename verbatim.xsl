@@ -17,6 +17,8 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
   <xsl:include href="verbatim_html.xsl"/>
   <xsl:include href="tei_header_html.xsl"/>
 
+  <xsl:param name="proof">true</xsl:param>
+
   <!-- 
   https://oeuvres.github.io/teinte_theme/
   -->
@@ -76,7 +78,7 @@ XSLT 1.0, compatible browser, PHP, Python, Java…
             </nav>
           </aside>
         </div>
-        <script type="text/javascript" charset="utf-8" src="https://oeuvres.github.io/teinte_theme/teinte.tree.js">//</script>
+        <script type="text/javascript" charset="utf-8" src="{$theme}teinte.tree.js">//</script>
         <script type="text/javascript" charset="utf-8" src="{$theme}verbatim.js">//</script>
       </body>
     </html>

@@ -231,3 +231,30 @@ div.lg {
 label.head {
     font-weight: bold;
 }
+
+a.head {
+    font-weight: bold;
+    opacity: 0.8;
+    color:inherit;
+    text-decoration: none;
+}
+
+a.head:hover {
+    opacity: 1;
+}
+a.tree_back:hover::before {
+    content: '❮';
+    position: absolute;
+    margin-left: -1em;
+    margin-top: -0.1em;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+    text-decoration: none;
+    color: inherit;
+}
